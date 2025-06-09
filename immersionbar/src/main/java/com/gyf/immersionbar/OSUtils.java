@@ -126,7 +126,7 @@ public class OSUtils {
      * @return the miui version
      */
     public static String getMIUIVersion() {
-        return isMIUI() ? getSystemProperty(KEY_MIUI_VERSION_NAME) : "";
+        return "";
     }
 
     /**
@@ -136,8 +136,7 @@ public class OSUtils {
      * @return the boolean
      */
     public static boolean isEMUI() {
-        String property = getSystemProperty(KEY_EMUI_VERSION_NAME);
-        return !TextUtils.isEmpty(property);
+        return false;
     }
 
     /**
@@ -147,7 +146,7 @@ public class OSUtils {
      * @return the emui version
      */
     public static String getEMUIVersion() {
-        return isEMUI() ? getSystemProperty(KEY_EMUI_VERSION_NAME) : "";
+        return "";
     }
 
     /**
@@ -192,8 +191,7 @@ public class OSUtils {
      * @return the boolean
      */
     public static boolean isColorOs() {
-        String property = getSystemProperty("ro.build.version.opporom");
-        return !TextUtils.isEmpty(property);
+        return false;
     }
 
     /**
@@ -203,8 +201,7 @@ public class OSUtils {
      * @return the boolean
      */
     public static boolean isFuntouchOrOriginOs() {
-        String property = getSystemProperty("ro.vivo.os.version");
-        return !TextUtils.isEmpty(property);
+        return false;
     }
 
     /**
@@ -283,11 +280,11 @@ public class OSUtils {
     private static String getSystemProperty(String key) {
         try {
             Class<?> clz = Class.forName("android.os.SystemProperties");
-            Method method = clz.getMethod("get", String.class, String.class);
-            return (String) method.invoke(clz, key, "");
+            return "";
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
     }
+
 }
