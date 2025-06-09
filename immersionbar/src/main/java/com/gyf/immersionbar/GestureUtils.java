@@ -1,15 +1,6 @@
 package com.gyf.immersionbar;
 
 import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_DEFAULT;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_EMUI;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_MIUI;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_MIUI_HIDE;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_OPPO;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG_GESTURE;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG_GESTURE_TYPE;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG_OLD;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_MODE_VIVO;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -38,79 +29,6 @@ class GestureUtils {
             int type = -1;
             boolean isGesture = false;
             boolean checkNavigation = false;
-            if (OSUtils.isHuaWei() || OSUtils.isEMUI()) {
-                if (OSUtils.isEMUI3_x() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    type = Settings.System.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_EMUI, -1);
-                } else {
-                    type = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_EMUI, -1);
-                }
-                if (type == 0) {
-                    navigationBarType = NavigationBarType.CLASSIC;
-                    isGesture = false;
-                } else if (type == 1) {
-                    navigationBarType = NavigationBarType.GESTURES;
-                    isGesture = true;
-                }
-            } else if (OSUtils.isXiaoMi() || OSUtils.isMIUI()) {
-                type = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_MIUI, -1);
-                if (type == 0) {
-                    navigationBarType = NavigationBarType.CLASSIC;
-                    isGesture = false;
-                } else if (type == 1) {
-                    navigationBarType = NavigationBarType.GESTURES;
-                    isGesture = true;
-                    int i = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_MIUI_HIDE, -1);
-                    checkNavigation = i != 1;
-                }
-            } else if (OSUtils.isVivo() || OSUtils.isFuntouchOrOriginOs()) {
-                type = Settings.Secure.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_VIVO, -1);
-                if (type == 0) {
-                    navigationBarType = NavigationBarType.CLASSIC;
-                    isGesture = false;
-                } else if (type == 1) {
-                    navigationBarType = NavigationBarType.GESTURES_THREE_STAGE;
-                    isGesture = true;
-                } else if (type == 2) {
-                    navigationBarType = NavigationBarType.GESTURES;
-                    isGesture = true;
-                }
-            } else if (OSUtils.isOppo() || OSUtils.isColorOs()) {
-                type = Settings.Secure.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_OPPO, -1);
-                if (type == 0) {
-                    navigationBarType = NavigationBarType.CLASSIC;
-                    isGesture = false;
-                } else if (type == 1 || type == 2 || type == 3) {
-                    navigationBarType = NavigationBarType.GESTURES;
-                    isGesture = true;
-                }
-            } else if (OSUtils.isSamsung()) {
-                type = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG, -1);
-                if (type != -1) {
-                    if (type == 0) {
-                        navigationBarType = NavigationBarType.CLASSIC;
-                        isGesture = false;
-                    } else if (type == 1) {
-                        isGesture = true;
-                        int gestureType = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG_GESTURE_TYPE, 1);
-                        if (gestureType == 1) {
-                            navigationBarType = NavigationBarType.GESTURES;
-                        } else {
-                            navigationBarType = NavigationBarType.GESTURES_THREE_STAGE;
-                        }
-                        int hide = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG_GESTURE, 1);
-                        checkNavigation = hide == 1;
-                    }
-                } else {
-                    type = Settings.Global.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_SAMSUNG_OLD, -1);
-                    if (type == 0) {
-                        navigationBarType = NavigationBarType.CLASSIC;
-                        isGesture = false;
-                    } else if (type == 1) {
-                        navigationBarType = NavigationBarType.GESTURES;
-                        isGesture = true;
-                    }
-                }
-            }
             if (type == -1) {
                 type = Settings.Secure.getInt(contentResolver, IMMERSION_NAVIGATION_BAR_MODE_DEFAULT, -1);
                 if (type == 0) {
