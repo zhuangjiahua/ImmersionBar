@@ -6,9 +6,7 @@ import static com.gyf.immersionbar.Constants.FLAG_FITS_SYSTEM_WINDOWS;
 import static com.gyf.immersionbar.Constants.FLAG_FITS_TITLE;
 import static com.gyf.immersionbar.Constants.FLAG_FITS_TITLE_MARGIN_TOP;
 import static com.gyf.immersionbar.Constants.IMMERSION_BOUNDARY_COLOR;
-import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_DARK_MIUI;
 import static com.gyf.immersionbar.Constants.IMMERSION_NAVIGATION_BAR_VIEW_ID;
-import static com.gyf.immersionbar.Constants.IMMERSION_STATUS_BAR_DARK_MIUI;
 import static com.gyf.immersionbar.Constants.IMMERSION_STATUS_BAR_VIEW_ID;
 
 import android.annotation.TargetApi;
@@ -444,22 +442,7 @@ public final class ImmersionBar implements ImmersionCallback {
     }
 
     private void setSpecialBarDarkMode() {
-        if (OSUtils.isMIUI6Later()) {
-            //修改miui状态栏字体颜色
-            SpecialBarFontUtils.setMIUIBarDark(mWindow, IMMERSION_STATUS_BAR_DARK_MIUI, mBarParams.statusBarDarkFont);
-            //修改miui导航栏图标为黑色
-            if (mBarParams.navigationBarEnable) {
-                SpecialBarFontUtils.setMIUIBarDark(mWindow, IMMERSION_NAVIGATION_BAR_DARK_MIUI, mBarParams.navigationBarDarkIcon);
-            }
-        }
-        // 修改Flyme OS状态栏字体颜色
-        if (OSUtils.isFlymeOS4Later()) {
-            if (mBarParams.flymeOSStatusBarFontColor != 0) {
-                SpecialBarFontUtils.setStatusBarDarkIcon(mActivity, mBarParams.flymeOSStatusBarFontColor);
-            } else {
-                SpecialBarFontUtils.setStatusBarDarkIcon(mActivity, mBarParams.statusBarDarkFont);
-            }
-        }
+
     }
 
     /**
@@ -1152,8 +1135,7 @@ public final class ImmersionBar implements ImmersionCallback {
      * @return the boolean
      */
     public static boolean isSupportStatusBarDarkFont() {
-        return OSUtils.isMIUI6Later() || OSUtils.isFlymeOS4Later()
-                || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
     /**
@@ -1163,7 +1145,7 @@ public final class ImmersionBar implements ImmersionCallback {
      * @return the boolean
      */
     public static boolean isSupportNavigationIconDark() {
-        return OSUtils.isMIUI6Later() || Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
 
     /**
@@ -2727,7 +2709,7 @@ public final class ImmersionBar implements ImmersionCallback {
     /**
      * 状态栏字体深色或亮色，判断设备支不支持状态栏变色来设置状态栏透明度
      * Status bar dark font immersion bar.
-     *
+     *gr
      * @param isDarkFont  the is dark font
      * @param statusAlpha the status alpha 如果不支持状态栏字体变色可以使用statusAlpha来指定状态栏透明度，比如白色状态栏的时候可以用到
      * @return the immersion bar
