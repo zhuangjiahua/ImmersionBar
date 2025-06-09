@@ -9,11 +9,11 @@
 > 3.1.1以上版本(mavenCentral)
    ```groovy
    // 基础依赖包，必须要依赖
-   implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+   implementation 'com.geyifeng.immersionbar:immersionbar:3.1.3'
    // kotlin扩展（可选）
-   implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
+   implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.1.3'
    // fragment快速实现（可选）已废弃
-   implementation 'com.geyifeng.immersionbar:immersionbar-components:3.2.2'
+   implementation 'com.geyifeng.immersionbar:immersionbar-components:3.1.3'
    ```
 > 3.0.0版本(jcenter)
    ```groovy
