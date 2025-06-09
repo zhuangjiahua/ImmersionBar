@@ -10,8 +10,6 @@ import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowInsets;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -156,21 +154,6 @@ public class NotchUtils {
     @SuppressLint("PrivateApi")
     private static boolean hasNotchAtXiaoMi(Context context) {
         int result = 0;
-        if (OSUtils.isXiaoMi()) {
-            try {
-                ClassLoader classLoader = context.getClassLoader();
-                Class<?> aClass = classLoader.loadClass(SYSTEM_PROPERTIES);
-                Method method = aClass.getMethod("getInt", String.class, int.class);
-                Object o = method.invoke(aClass, NOTCH_XIAO_MI, 0);
-                if (o != null) {
-                    result = (Integer) o;
-                }
-            } catch (NoSuchMethodException ignored) {
-            } catch (IllegalAccessException ignored) {
-            } catch (InvocationTargetException ignored) {
-            } catch (ClassNotFoundException ignored) {
-            }
-        }
         return result == 1;
     }
 
@@ -184,17 +167,6 @@ public class NotchUtils {
     @SuppressLint("PrivateApi")
     private static boolean hasNotchAtHuaWei(Context context) {
         boolean result = false;
-        if (OSUtils.isHuaWei()) {
-            try {
-                ClassLoader classLoader = context.getClassLoader();
-                Class<?> aClass = classLoader.loadClass(NOTCH_HUA_WEI);
-                Method get = aClass.getMethod("hasNotchInScreen");
-                result = (boolean) get.invoke(aClass);
-            } catch (ClassNotFoundException ignored) {
-            } catch (NoSuchMethodException ignored) {
-            } catch (Exception ignored) {
-            }
-        }
         return result;
     }
 
@@ -208,17 +180,6 @@ public class NotchUtils {
     @SuppressLint("PrivateApi")
     private static boolean hasNotchAtVIVO(Context context) {
         boolean result = false;
-        if (OSUtils.isVivo()) {
-            try {
-                ClassLoader classLoader = context.getClassLoader();
-                Class<?> aClass = classLoader.loadClass(NOTCH_VIVO);
-                Method method = aClass.getMethod("isFeatureSupport", int.class);
-                result = (boolean) method.invoke(aClass, 0x00000020);
-            } catch (ClassNotFoundException ignored) {
-            } catch (NoSuchMethodException ignored) {
-            } catch (Exception ignored) {
-            }
-        }
         return result;
     }
 
@@ -230,13 +191,6 @@ public class NotchUtils {
      * @return the boolean
      */
     private static boolean hasNotchAtOPPO(Context context) {
-        if (OSUtils.isOppo()) {
-            try {
-                return context.getPackageManager().hasSystemFeature(NOTCH_OPPO);
-            } catch (Exception ignored) {
-                return false;
-            }
-        }
         return false;
     }
 
@@ -249,12 +203,6 @@ public class NotchUtils {
      * @return the boolean
      */
     private static boolean hasNotchAtLenovo(Context context) {
-        if (OSUtils.isLenovo()) {
-            int resourceId = context.getResources().getIdentifier(NOTCH_LENOVO, "bool", "android");
-            if (resourceId > 0) {
-                return context.getResources().getBoolean(resourceId);
-            }
-        }
         return false;
     }
 
@@ -265,15 +213,6 @@ public class NotchUtils {
      * @return the boolean
      */
     private static boolean hasNotchAtMeiZu() {
-        if (OSUtils.isMeizu()) {
-            try {
-                Class<?> clazz = Class.forName(NOTCH_MEIZU);
-                Field field = clazz.getDeclaredField("IS_FRINGE_DEVICE");
-                return (boolean) field.get(null);
-            } catch (Exception e) {
-                return false;
-            }
-        }
         return false;
     }
 
